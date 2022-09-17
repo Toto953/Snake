@@ -19,18 +19,23 @@ class Game():
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
                     self.running = False
-                
+
+                # Contrôle du serpent
                 if event.key == pygame.K_LEFT:
-                    self.snake.velocity[0] = -1
+                    if self.snake.velocity[0] != 1:
+                        self.snake.velocity[0] = -1
                     self.snake.velocity[1] = 0
                 elif event.key == pygame.K_RIGHT:
-                    self.snake.velocity[0] = 1
+                    if self.snake.velocity[0] != -1:
+                        self.snake.velocity[0] = 1
                     self.snake.velocity[1] = 0
                 elif event.key == pygame.K_UP:
-                    self.snake.velocity[1] = -1
+                    if self.snake.velocity[1] != 1:
+                        self.snake.velocity[1] = -1
                     self.snake.velocity[0] = 0
                 elif event.key == pygame.K_DOWN:
-                    self.snake.velocity[1] = 1
+                    if self.snake.velocity[1] != -1:
+                        self.snake.velocity[1] = 1
                     self.snake.velocity[0] = 0
 
     # Logique du jeu
