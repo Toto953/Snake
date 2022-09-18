@@ -1,4 +1,3 @@
-from tkinter.dnd import dnd_start
 import pygame
 from copy import deepcopy
 from math import ceil
@@ -9,20 +8,17 @@ class Snake():
         self.WINDOW_WIDTH = WINDOW_WIDTH
         self.WINDOW_HEIGHT = WINDOW_HEIGHT
         self.size_case_grid = size_case_grid
-        self.rect = pygame.Rect(320, 320, self.size_case_grid, self.size_case_grid)
+        self.rect = pygame.Rect(0, 0, self.size_case_grid, self.size_case_grid)
         self.color = (255, 255, 255)
         self.velocity = [0, 0]
         self.max_slow_speed = 10
         self.slow_speed = self.max_slow_speed
         self.lenght = 1
-        self.data = [pygame.Rect(320, 320, 64, 64)]
+        self.data = [self.rect]
 
     def move(self, window):
         
         if self.slow_speed == 0:
-
-            if self.lenght < 3:
-                self.lenght+=1
 
             self.rect.x += self.velocity[0]*self.size_case_grid
             self.rect.y += self.velocity[1]*self.size_case_grid
@@ -43,3 +39,6 @@ class Snake():
                 self.data.pop(0)
 
             self.slow_speed = self.max_slow_speed
+
+    def add_lenght(self):
+        self.lenght += 1
