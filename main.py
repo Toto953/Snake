@@ -1,3 +1,5 @@
+# LANCEMENT DU JEU
+
 import pygame
 from game import Game
 

@@ -16,10 +16,8 @@ class Snake():
         self.lenght = 1
         self.data = [self.rect]
 
-    def move(self, window):
-        
+    def move(self):
         if self.slow_speed == 0:
-
             self.rect.x += self.velocity[0]*self.size_case_grid
             self.rect.y += self.velocity[1]*self.size_case_grid
 

@@ -1,9 +1,8 @@
-from time import sleep
 import pygame
 from food import Food
 from grid import Grid
 from snake import Snake
-from random import randint, choice
+from random import choice
 
 class Game():
 
@@ -12,11 +11,11 @@ class Game():
         self.WINDOW_WIDTH, self.WINDOW_HEIGHT = pygame.display.get_surface().get_size()
         self.size_case_grid = int(self.WINDOW_WIDTH/30)
         self.snake = Snake(self.WINDOW_WIDTH, self.WINDOW_HEIGHT, self.size_case_grid)
-        self.grid = Grid(self.WINDOW_WIDTH, self.WINDOW_HEIGHT)
+        self.grid = Grid(self.window, self.WINDOW_WIDTH, self.WINDOW_HEIGHT, self.size_case_grid)
         self.food = Food(self.WINDOW_WIDTH, self.WINDOW_HEIGHT, self.size_case_grid)
-        self.running = True
         self.clock = pygame.time.Clock()
         self.food.spawn(choice(self.food.positionsX), choice(self.food.positionsY))
+        self.running = True
 
     # Evenements de l'utilisateur
     def handling_events(self):
@@ -46,7 +45,7 @@ class Game():
     # Logique du jeu
     def update(self):
         self.snake.slow_speed -= 1
-        self.snake.move(self.window)
+        self.snake.move()
 
         # Regénération de la pomme lorsque le serpent la mange
         if self.food.rect.colliderect(self.snake.data[-1]):
@@ -59,13 +58,12 @@ class Game():
                     if i[0] == self.food.rect.x and i[1] == self.food.rect.y:
                         s = False
                         break
-
                 if s == True:
                     good = True
-
             self.food.spawn(self.food.rect.x, self.food.rect.y)
             self.snake.add_lenght()
 
+        # Si le serpent se mord lui-même la queue
         if self.snake.data[-1] in self.snake.data[:-1] and self.snake.data[-1] in self.snake.data[:-1]:
             self.running = False
 
