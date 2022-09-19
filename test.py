@@ -38,28 +38,29 @@
 
 
 
+from typing import Dict
 import pygame
 
-data = [pygame.Rect(0, 1, 2, 3), pygame.Rect(4, 5, 6, 7), pygame.Rect(8, 9, 10, 11)]
+# data = [pygame.Rect(0, 1, 2, 3), pygame.Rect(4, 5, 6, 7), pygame.Rect(8, 9, 10, 11)]
 
-good = False
-x = 1
+# good = False
+# x = 1
 
-while not good:
-    s = True
-    for i in data:
-        if i[0] == x:
-            s = False
-            break
+# while not good:
+#     s = True
+#     for i in data:
+#         if i[0] == x:
+#             s = False
+#             break
     
-    if s == True:
-        good = True
+#     if s == True:
+#         good = True
 
-    # x += 1
+#     # x += 1
 
-print(data[:-1])
+# print(data[:-1])
 
-pygame.quit()
+# pygame.quit()
 
 
 
@@ -75,3 +76,50 @@ pygame.quit()
 # while counter != -1:
 #     print(counter)
 #     counter -= 1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# from cryptography.fernet import Fernety
+# import json
+# import ast
+
+# player_name = "TOTOTTE"
+# score = 10
+
+# data = {"Players":
+#         [{
+#             "name": player_name,
+#             "max_score": score
+#         }]
+#     }
+
+# f = open("data.json", "wb")
+# key = Fernet.generate_key()
+# fernet = Fernet(b'WJtfLa2Z9kkj4PzVJCyWKNZrNA6XKAvcdmu5mbnEhw0=')
+# encrypted = fernet.encrypt(str(data).encode("UTF-8"))
+# f.write(encrypted)
+# f.close()
+
+# f = open("data.json", "rb")
+# a = str(fernet.decrypt(f.read()).decode("UTF-8"))
+# f.close()
+
+# print(type(a))
+
+# res = ast.literal_eval(a)
+
+# print(res)
+# print(type(res))

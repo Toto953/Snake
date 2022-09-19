@@ -2,7 +2,7 @@ import pygame
 from food import Food
 from grid import Grid
 from main_menu import Main_menu
-from out_menu import out_menu
+from out_menu import Out_menu
 from snake import Snake
 from random import choice
 
@@ -22,7 +22,14 @@ class Game():
         self.in_game = False
         self.in_out_menu = False
         self.main_menu = Main_menu(self.window)
-        self.out_menu = out_menu(self.window)
+        self.out_menu = Out_menu(self.window)
+        self.score = 1
+        self.score_police = pygame.font.SysFont("comicsansms", 32, True)
+        self.text_score = self.score_police.render(f"score: {self.score}", True, (255, 255, 255))
+
+    def init(self):
+        self.score = 1
+        self.text_score = self.score_police.render(f"score: {self.score}", True, (255, 255, 255))
 
     # Evenements de l'utilisateur
     def handling_events(self):
@@ -69,9 +76,14 @@ class Game():
                     good = True
             self.food.spawn(self.food.rect.x, self.food.rect.y)
             self.snake.add_lenght()
+            self.score+=1
+            self.text_score = self.score_police.render(f"score: {self.score}", True, (255, 255, 255))
 
         # Si le serpent se mord lui-même la queue
         if self.snake.data[-1] in self.snake.data[:-1] and self.snake.data[-1] in self.snake.data[:-1]:
+            self.out_menu.get_score()
+            self.out_menu.set_score(self.score)
+            self.init()
             self.snake.init()
             self.in_game = False
             self.in_out_menu = True
@@ -84,6 +96,7 @@ class Game():
             pygame.draw.rect(self.window, self.snake.color, self.snake.data[i-1])
         self.grid.draw()
         pygame.draw.rect(self.window, self.food.color, self.food.rect, border_radius=int(self.size_case_grid/2))
+        self.window.blit(self.text_score, (50, 50))
         pygame.display.flip()
 
     # Boucle du programme

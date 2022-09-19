@@ -2,6 +2,15 @@
 
 import pygame
 from game import Game
+from cryptography.fernet import Fernet
+from os.path import exists
+
+if not exists("key.key"):
+    with open("key.key", "wb") as f:
+        f.write(Fernet.generate_key())
+if not exists("data.json"):
+    f = open("data.json", "wb")
+    f.close()
 
 pygame.init()
 

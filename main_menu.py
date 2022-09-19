@@ -22,6 +22,10 @@ class Main_menu():
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
+                    self.value_returned = -1
+                    self.running = False
+                elif event.key == pygame.K_RETURN:
+                    self.value_returned = 0
                     self.running = False
 
             if event.type == pygame.MOUSEBUTTONDOWN:
