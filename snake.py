@@ -40,3 +40,7 @@ class Snake():
 
     def add_lenght(self):
         self.lenght += 1
+    
+    def init(self):
+        self.lenght = 1
+        self.data = [self.rect]

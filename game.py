@@ -1,6 +1,8 @@
 import pygame
 from food import Food
 from grid import Grid
+from main_menu import Main_menu
+from out_menu import out_menu
 from snake import Snake
 from random import choice
 
@@ -14,8 +16,13 @@ class Game():
         self.grid = Grid(self.window, self.WINDOW_WIDTH, self.WINDOW_HEIGHT, self.size_case_grid)
         self.food = Food(self.WINDOW_WIDTH, self.WINDOW_HEIGHT, self.size_case_grid)
         self.clock = pygame.time.Clock()
-        self.food.spawn(choice(self.food.positionsX), choice(self.food.positionsY))
+        self.food.spawn(choice(self.food.list_of_positionsX), choice(self.food.list_of_positionsY))
         self.running = True
+        self.in_main_menu = True
+        self.in_game = False
+        self.in_out_menu = False
+        self.main_menu = Main_menu(self.window)
+        self.out_menu = out_menu(self.window)
 
     # Evenements de l'utilisateur
     def handling_events(self):
@@ -52,8 +59,8 @@ class Game():
             good = False
             while not good:
                 s = True
-                self.food.rect.x = choice(self.food.positionsX)
-                self.food.rect.y = choice(self.food.positionsY)
+                self.food.rect.x = choice(self.food.list_of_positionsX)
+                self.food.rect.y = choice(self.food.list_of_positionsY)
                 for i in self.snake.data:
                     if i[0] == self.food.rect.x and i[1] == self.food.rect.y:
                         s = False
@@ -65,7 +72,9 @@ class Game():
 
         # Si le serpent se mord lui-même la queue
         if self.snake.data[-1] in self.snake.data[:-1] and self.snake.data[-1] in self.snake.data[:-1]:
-            self.running = False
+            self.snake.init()
+            self.in_game = False
+            self.in_out_menu = True
 
 
     # Affichage
@@ -73,14 +82,27 @@ class Game():
         self.window.fill((32, 32, 32))
         for i in range(self.snake.lenght):
             pygame.draw.rect(self.window, self.snake.color, self.snake.data[i-1])
-        self.grid.draw(self.window, self.size_case_grid)
+        self.grid.draw()
         pygame.draw.rect(self.window, self.food.color, self.food.rect, border_radius=int(self.size_case_grid/2))
         pygame.display.flip()
 
     # Boucle du programme
     def run(self):
         while self.running:
-            self.clock.tick(240)
-            self.handling_events()
-            self.update()
-            self.display()
+            if self.in_main_menu:
+                if self.main_menu.run() == 0:
+                    self.in_main_menu = False
+                    self.in_game = True
+                elif self.main_menu.run() == -1:
+                    self.running = False
+            elif self.in_game:
+                self.clock.tick(240)
+                self.handling_events()
+                self.update()
+                self.display()
+            elif self.in_out_menu:
+                if self.out_menu.run() == 0:
+                    self.in_out_menu = False
+                    self.in_game = True
+                elif self.out_menu.run() == -1:
+                    self.running = False
